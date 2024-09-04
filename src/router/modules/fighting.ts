@@ -19,7 +19,7 @@ export default {
     {
       path: "/fighting/index1",
       name: "Fighting1",
-      component: () => import("@/views/fighting/index1.vue"),
+      component: () => import("@/views/permission/page/index.vue"),
       meta: {
         title: "二级菜单1"
       }

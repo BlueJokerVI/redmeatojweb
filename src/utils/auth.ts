@@ -85,6 +85,8 @@ export function setToken(data: DataInfo<Date>) {
     });
   }
 
+  console.log("data", data);
+
   if (data.account && data.roles) {
     const { account, roles } = data;
     setUserKey({

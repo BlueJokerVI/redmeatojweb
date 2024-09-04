@@ -109,10 +109,11 @@ import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import User from "@iconify-icons/ri/user-3-fill";
-import { setToken } from "@/utils/auth";
+import { setToken, userKey } from "@/utils/auth";
 import { addPathMatch } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { getLogin } from "@/api/user";
+import { getLogin, userRole } from "@/api/user";
+import { ru } from "element-plus/es/locales.mjs";
 
 defineOptions({
   name: "Login"
@@ -142,14 +143,16 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     message(`登录失败，${res.message}`, { type: "error" });
     return;
   }
+  console.log("res", res);
 
   //表单校验
   await formEl.validate(valid => {
     if (valid) {
       loading.value = true;
+      //存储用户信息
       setToken({
         account: ruleForm.account,
-        roles: ["admin"],
+        roles: [userRole[res.data.userRole]] as Array<string>,
         accessToken: "eyJhbGciOiJIUzUxMiJ9.admin"
       } as any);
       // 全部采取静态路由模式

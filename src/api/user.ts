@@ -28,6 +28,12 @@ export type UserResult = {
   };
 };
 
+export enum userRole {
+  "user",
+  "admin",
+  "ban"
+}
+
 export type RefreshTokenResult = {
   success: boolean;
   data: {

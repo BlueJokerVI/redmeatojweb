@@ -3,7 +3,7 @@ export default {
   redirect: "/error/403",
   meta: {
     icon: "ri:information-line",
-    // showLink: false,
+    showLink: false,
     title: "异常页面",
     rank: 9
   },
@@ -29,7 +29,8 @@ export default {
       name: "500",
       component: () => import("@/views/error/500.vue"),
       meta: {
-        title: "500"
+        title: "500",
+        roles: ["admin"]
       }
     }
   ]
