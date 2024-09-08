@@ -11,8 +11,11 @@ import type {
 } from "./types.d";
 import { stringify } from "qs";
 import NProgress from "../progress";
-import { getToken, formatToken } from "@/utils/auth";
+import { getToken, formatToken, removeToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import { message } from "../message";
+import router from "@/router";
+import { storageLocal } from "@/store/utils";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -23,6 +26,8 @@ const defaultConfig: AxiosRequestConfig = {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest"
   },
+  //请求带上cookie
+  withCredentials: true,
   // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
   paramsSerializer: {
     serialize: stringify as unknown as CustomParamsSerializer
@@ -120,6 +125,7 @@ class PureHttp {
     const instance = PureHttp.axiosInstance;
     instance.interceptors.response.use(
       (response: PureHttpResponse) => {
+        console.log("response", response);
         const $config = response.config;
         // 关闭进度条动画
         NProgress.done();
@@ -130,6 +136,19 @@ class PureHttp {
         }
         if (PureHttp.initConfig.beforeResponseCallback) {
           PureHttp.initConfig.beforeResponseCallback(response);
+          return response.data;
+        }
+
+        if (response.data.code !== 0) {
+          //返回未登录，跳转到登录页面
+          if (response.data.code === 40100) {
+            message(response.data.message, { type: "error" });
+            removeToken();
+            storageLocal().clear();
+            router.push("/login");
+            return response.data;
+          }
+          message(response.data.message, { type: "error" });
           return response.data;
         }
         return response.data;

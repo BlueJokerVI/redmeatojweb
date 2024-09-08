@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { initRouter } from "@/router/utils";
+// import { initRouter } from "@/router/utils";
 import { storageLocal } from "@pureadmin/utils";
 import { type CSSProperties, ref, computed } from "vue";
 import { useUserStoreHook } from "@/store/modules/user";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { UserResult } from "@/api/user/model";
 
 defineOptions({
   name: "PermissionPage"
@@ -32,11 +33,11 @@ const options = [
 function onChange() {
   useUserStoreHook()
     .loginByUsername({ account: account.value, password: "admin123" })
-    .then(res => {
+    .then((res: UserResult) => {
       if (res.code === 0) {
         storageLocal().removeItem("async-routes");
         usePermissionStoreHook().clearAllCachePage();
-        initRouter();
+        // initRouter();
       }
     });
 }

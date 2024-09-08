@@ -9,6 +9,7 @@ import LaySidebarTopCollapse from "../lay-sidebar/components/SidebarTopCollapse.
 
 import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 import Setting from "@iconify-icons/ri/settings-3-line";
+import Person from "@iconify-icons/ri/contacts-line";
 
 const {
   layout,
@@ -19,7 +20,8 @@ const {
   account,
   userAvatar,
   avatarsStyle,
-  toggleSideBar
+  toggleSideBar,
+  toAccountSettings
 } = useNav();
 </script>
 
@@ -54,6 +56,10 @@ const {
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
+            <el-dropdown-item @click="toAccountSettings">
+              <IconifyIconOffline :icon="Person" style="margin: 5px" />
+              用户信息
+            </el-dropdown-item>
             <el-dropdown-item @click="logout">
               <IconifyIconOffline
                 :icon="LogoutCircleRLine"
@@ -64,6 +70,7 @@ const {
           </el-dropdown-menu>
         </template>
       </el-dropdown>
+
       <span
         class="set-icon navbar-bg-hover"
         title="打开系统配置"

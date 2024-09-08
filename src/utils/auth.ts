@@ -1,26 +1,20 @@
 import Cookies from "js-cookie";
 import { useUserStoreHook } from "@/store/modules/user";
 import { storageLocal, isString, isIncludeAllChildren } from "@pureadmin/utils";
+import type { UserInfo } from "@/api/user/model";
 
-export interface DataInfo<T> {
+export type DataInfo<T> = UserInfo & {
   /** token */
   accessToken: string;
   /** `accessToken`的过期时间（时间戳） */
   expires: T;
   /** 用于调用刷新accessToken的接口时所需的token */
   refreshToken: string;
-  /** 头像 */
-  avatar?: string;
-  /** 用户名 */
-  account?: string;
-  /** 昵称 */
-  name?: string;
   /** 当前登录用户的角色 */
   roles?: Array<string>;
   /** 当前登录用户的按钮级别权限 */
   permissions?: Array<string>;
-}
-
+};
 export const userKey = "user-info";
 export const TokenKey = "authorized-token";
 /**
@@ -43,9 +37,11 @@ export function getToken(): DataInfo<number> {
  * @description 设置`token`以及一些必要信息并采用无感刷新`token`方案
  * 无感刷新：后端返回`accessToken`（访问接口使用的`token`）、`refreshToken`（用于调用刷新`accessToken`的接口时所需的`token`，`refreshToken`的过期时间（比如30天）应大于`accessToken`的过期时间（比如2小时））、`expires`（`accessToken`的过期时间）
  * 将`accessToken`、`expires`、`refreshToken`这三条信息放在key值为authorized-token的cookie里（过期自动销毁）
- * 将`avatar`、`account`、`name`、`roles`、`permissions`、`refreshToken`、`expires`这七条信息放在key值为`user-info`的localStorage里（利用`multipleTabsKey`当浏览器完全关闭后自动销毁）
+ * 将`userAvatar`、`account`、`name`、`roles`、`permissions`、`refreshToken`、`expires`这七条信息放在key值为`user-info`的localStorage里（利用`multipleTabsKey`当浏览器完全关闭后自动销毁）
  */
 export function setToken(data: DataInfo<Date>) {
+  console.log("setToken", data);
+
   let expires = 0;
   const { accessToken, refreshToken } = data;
   const { isRemembered, loginDay } = useUserStoreHook();
@@ -68,37 +64,72 @@ export function setToken(data: DataInfo<Date>) {
       : {}
   );
 
-  function setUserKey({ avatar, account, name, roles, permissions }) {
-    useUserStoreHook().SET_AVATAR(avatar);
-    useUserStoreHook().SET_USERNAME(account);
-    useUserStoreHook().SET_NICKNAME(name);
+  function setUserKey({
+    id,
+    account,
+    userAvatar,
+    name,
+    gender,
+    userRole,
+    userProfile,
+    roles,
+    permissions
+  }) {
+    useUserStoreHook().SET_ID(id);
+    if (userAvatar === "" || userAvatar === null) {
+      useUserStoreHook().SET_USER_AVATAR("/src/assets/user.jpg");
+    } else {
+      useUserStoreHook().SET_USER_AVATAR(userAvatar);
+    }
+    useUserStoreHook().SET_GENDER(gender);
+    useUserStoreHook().SET_USER_ROLE(userRole);
+    useUserStoreHook().SET_USER_Profile(userProfile);
+    useUserStoreHook().SET_ACCOUNT(account);
+    useUserStoreHook().SET_NAME(name);
     useUserStoreHook().SET_ROLES(roles);
     useUserStoreHook().SET_PERMS(permissions);
     storageLocal().setItem(userKey, {
       refreshToken,
       expires,
-      avatar,
+      userAvatar,
       account,
       name,
       roles,
-      permissions
+      permissions,
+      id,
+      gender,
+      userRole,
+      userProfile
     });
   }
 
   console.log("data", data);
-
+  const {
+    id,
+    account,
+    userAvatar,
+    name,
+    gender,
+    userRole,
+    userProfile,
+    roles,
+    permissions
+  } = data;
   if (data.account && data.roles) {
-    const { account, roles } = data;
     setUserKey({
-      avatar: data?.avatar ?? "",
+      id,
       account,
-      name: data?.name ?? "",
+      userAvatar,
+      name,
+      gender,
+      userRole,
+      userProfile,
       roles,
-      permissions: data?.permissions ?? []
+      permissions
     });
   } else {
-    const avatar =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "";
+    const userAvatar =
+      storageLocal().getItem<DataInfo<number>>(userKey)?.userAvatar ?? "";
     const account =
       storageLocal().getItem<DataInfo<number>>(userKey)?.account ?? "";
     const name = storageLocal().getItem<DataInfo<number>>(userKey)?.name ?? "";
@@ -107,9 +138,13 @@ export function setToken(data: DataInfo<Date>) {
     const permissions =
       storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [];
     setUserKey({
-      avatar,
+      id,
       account,
+      userAvatar,
       name,
+      gender,
+      userRole,
+      userProfile,
       roles,
       permissions
     });

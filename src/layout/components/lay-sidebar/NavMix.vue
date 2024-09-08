@@ -12,7 +12,7 @@ import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vu
 
 import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 import Setting from "@iconify-icons/ri/settings-3-line";
-
+import Person from "@iconify-icons/ri/contacts-line";
 const menuRef = ref();
 const defaultActive = ref(null);
 
@@ -25,7 +25,8 @@ const {
   account,
   userAvatar,
   getDivStyle,
-  avatarsStyle
+  avatarsStyle,
+  toAccountSettings
 } = useNav();
 
 function getDefaultActive(routePath) {
@@ -105,6 +106,10 @@ watch(
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
+            <el-dropdown-item @click="toAccountSettings">
+              <IconifyIconOffline :icon="Person" style="margin: 5px" />
+              用户信息
+            </el-dropdown-item>
             <el-dropdown-item @click="logout">
               <IconifyIconOffline
                 :icon="LogoutCircleRLine"

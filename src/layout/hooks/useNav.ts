@@ -39,9 +39,9 @@ export function useNav() {
 
   /** 头像（如果头像为空则使用 src/assets/user.jpg ） */
   const userAvatar = computed(() => {
-    return isAllEmpty(useUserStoreHook()?.avatar)
+    return isAllEmpty(useUserStoreHook()?.userAvatar)
       ? Avatar
-      : useUserStoreHook()?.avatar;
+      : useUserStoreHook()?.userAvatar;
   });
 
   /** 昵称（如果昵称为空则显示用户名） */
@@ -86,6 +86,10 @@ export function useNav() {
 
   function backTopMenu() {
     router.push(getTopMenu()?.path);
+  }
+
+  function toAccountSettings() {
+    router.push("/accountSettings");
   }
 
   function onPanel() {
@@ -152,6 +156,7 @@ export function useNav() {
     account,
     userAvatar,
     avatarsStyle,
-    tooltipEffect
+    tooltipEffect,
+    toAccountSettings
   };
 }

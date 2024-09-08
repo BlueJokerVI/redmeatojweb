@@ -18,7 +18,17 @@ export default [
     meta: {
       title: "注册",
       showLink: false,
-      rank: 101
+      rank: 102
+    }
+  },
+  {
+    path: "/accountSettings",
+    name: "AccountSettings",
+    component: () => import("@/views/account-settings/index.vue"),
+    meta: {
+      title: "用户信息",
+      showLink: false,
+      rank: 103
     }
   },
   {
@@ -27,7 +37,7 @@ export default [
     meta: {
       title: "加载中...",
       showLink: false,
-      rank: 102
+      rank: 104
     },
     children: [
       {

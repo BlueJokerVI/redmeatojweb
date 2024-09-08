@@ -99,7 +99,7 @@ import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
-import { initRouter, getTopMenu } from "@/router/utils";
+import { getTopMenu } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
@@ -109,10 +109,11 @@ import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import User from "@iconify-icons/ri/user-3-fill";
-import { setToken, userKey } from "@/utils/auth";
+import { DataInfo, setToken, userKey } from "@/utils/auth";
 import { addPathMatch } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { getLogin, userRole } from "@/api/user";
+import { UserResult, UserRole } from "@/api/user/model";
+import { getLogin } from "@/api/user/request";
 import { ru } from "element-plus/es/locales.mjs";
 
 defineOptions({
@@ -138,23 +139,32 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
 
   //账号密码登入
-  let res = await getLogin(ruleForm);
+  let res = (await getLogin(ruleForm)) as UserResult;
+  console.log("res", res);
+
   if (res.code !== 0) {
     message(`登录失败，${res.message}`, { type: "error" });
     return;
   }
-  console.log("res", res);
+  console.log("da", { ...res.data });
+
+  let storeInfo: DataInfo<Date> = {
+    ...res.data,
+    roles: [UserRole[res.data.userRole]] as Array<string> /**适配前端权限 */,
+    accessToken: "eyJhbGciOiJIUzUxMiJ9.admin" /**假的后端没实现 token */,
+    refreshToken: "",
+    permissions: [],
+    expires: new Date(
+      new Date().setDate(new Date().getDate() + 7)
+    ) /**设置过期时间未一周后 */
+  };
 
   //表单校验
   await formEl.validate(valid => {
     if (valid) {
       loading.value = true;
       //存储用户信息
-      setToken({
-        account: ruleForm.account,
-        roles: [userRole[res.data.userRole]] as Array<string>,
-        accessToken: "eyJhbGciOiJIUzUxMiJ9.admin"
-      } as any);
+      setToken(storeInfo);
       // 全部采取静态路由模式
       usePermissionStoreHook().handleWholeMenus([]);
       addPathMatch();
