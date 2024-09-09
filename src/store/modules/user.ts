@@ -16,7 +16,7 @@ export const useUserStore = defineStore({
   id: "pure-user",
   state: (): userType => ({
     /**id */
-    id: storageLocal().getItem<DataInfo<number>>(userKey)?.id ?? 0,
+    id: storageLocal().getItem<DataInfo<any>>(userKey)?.id ?? undefined,
     // 头像
     userAvatar:
       storageLocal().getItem<DataInfo<number>>(userKey)?.userAvatar === "" ||

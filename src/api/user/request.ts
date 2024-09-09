@@ -4,6 +4,8 @@ import type {
   AdminUpdateUserReq,
   CustomUserInfoReq,
   RefreshTokenResult,
+  UserListReq,
+  UserListResp,
   UserUpdatePasswordReq
 } from "./model";
 
@@ -33,6 +35,13 @@ export const updatePassword = (data: UserUpdatePasswordReq) => {
 /** 自定义用户信息 */
 export const customUserInfo = (data: CustomUserInfoReq) => {
   return http.request("post", baseUrlApi("user/customUserInfo"), {
+    data
+  });
+};
+
+/** 分页获取用户列表 */
+export const getUserList = (data: UserListReq) => {
+  return http.request<UserListResp>("post", baseUrlApi("user/userList"), {
     data
   });
 };

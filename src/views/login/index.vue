@@ -140,14 +140,6 @@ const onLogin = async (formEl: FormInstance | undefined) => {
 
   //账号密码登入
   let res = (await getLogin(ruleForm)) as UserResult;
-  console.log("res", res);
-
-  if (res.code !== 0) {
-    message(`登录失败，${res.message}`, { type: "error" });
-    return;
-  }
-  console.log("da", { ...res.data });
-
   let storeInfo: DataInfo<Date> = {
     ...res.data,
     roles: [UserRole[res.data.userRole]] as Array<string> /**适配前端权限 */,

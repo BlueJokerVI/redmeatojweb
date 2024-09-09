@@ -1,4 +1,4 @@
-import type { BaseResponse } from "../model";
+import type { BasePageResponse, BaseResponse } from "../model";
 
 /**
  * 用户登入model
@@ -16,7 +16,7 @@ export type UserResult = {
 
 export type UserInfo = {
   /**id */
-  id?: number;
+  id?: string;
   /**性别 */
   gender?: number;
   /** 头像 */
@@ -44,7 +44,7 @@ export type UserRegister = {
  * @description 管理员更新用户信息
  */
 export type AdminUpdateUserReq = {
-  id: number;
+  id: string;
   gender?: number;
   mpOpenId?: string;
   name?: string;
@@ -73,8 +73,9 @@ export type CustomUserInfoReq = {
   userAvatar?: string;
   userProfile?: string;
 };
+
 export type CustomUserInfoResp = BaseResponse<{
-  id: number;
+  id: string;
   account: string;
   gender: number;
   name: string;
@@ -82,6 +83,26 @@ export type CustomUserInfoResp = BaseResponse<{
   userProfile: string;
   userRole: number;
 }>;
+
+/**
+ * 分页获取用户信息列表
+ */
+export type UserListReq = {
+  current: number;
+  pageSize: number;
+  sortField?: string;
+  sortOrder?: string;
+  name?: string;
+  id?: string;
+  account?: string;
+  gender?: number;
+  userRole?: number;
+  unionId?: string;
+  updateTime?: Date;
+};
+
+export type UserListResp = BaseResponse<BasePageResponse<Array<UserInfo>>>;
+
 export type RefreshTokenResult = {
   success: boolean;
   data: {
