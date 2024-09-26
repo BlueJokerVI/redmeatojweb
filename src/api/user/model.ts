@@ -101,7 +101,7 @@ export type UserListReq = {
   updateTime?: Date;
 };
 
-export type UserListResp = BaseResponse<BasePageResponse<Array<UserInfo>>>;
+export type UserListResp = BaseResponse<BasePageResponse<UserInfo>>;
 
 export type RefreshTokenResult = {
   success: boolean;

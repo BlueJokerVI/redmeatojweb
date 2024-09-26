@@ -52,6 +52,18 @@ import "tippy.js/themes/light.css";
 import VueTippy from "vue-tippy";
 app.use(VueTippy);
 
+//映入md编辑器组件
+import VMdEditor from "@kangc/v-md-editor";
+import "@kangc/v-md-editor/lib/style/base-editor.css";
+import githubTheme from "@kangc/v-md-editor/lib/theme/github.js";
+import "@kangc/v-md-editor/lib/theme/style/github.css";
+// highlightjs
+import hljs from "highlight.js";
+VMdEditor.use(githubTheme, {
+  Hljs: hljs
+});
+app.use(VMdEditor);
+
 getPlatformConfig(app).then(async config => {
   setupStore(app);
   app.use(router);

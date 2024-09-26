@@ -7,7 +7,8 @@ export default {
   meta: {
     icon: userSettingsFill,
     title: "用户管理",
-    roles: [UserRole[1]]
+    roles: [UserRole[1]],
+    rank: 2
   },
   children: [
     {

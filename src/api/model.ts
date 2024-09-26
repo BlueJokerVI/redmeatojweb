@@ -5,9 +5,16 @@ export type BaseResponse<T> = {
 };
 
 export type BasePageResponse<T> = {
-  current: 1;
-  pageSize: 10;
+  current: number;
+  pageSize: number;
   total: number;
   isLastPage: boolean;
-  lists: T;
+  lists: Array<T>;
+};
+
+export type BasePageReq = {
+  current: number;
+  pageSize: number;
+  sortField?: string;
+  sortOrder?: string;
 };
