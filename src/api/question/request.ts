@@ -2,6 +2,7 @@ import { http } from "@/utils/http";
 import type {
   AddQuestionReq,
   AddQuestionResp,
+  AddTestCasesReq,
   DeleteTestCaseReq,
   GetTestCasePageReq,
   GetTestCasePageResp,
@@ -66,6 +67,17 @@ export const getQuestionTestCasePage = (data: GetTestCasePageReq) => {
   return http.request<GetTestCasePageResp>(
     "post",
     baseUrlApi("question/getTestCasePage"),
+    { data }
+  );
+};
+
+/**
+ * 题目测试用添加
+ */
+export const addQuestionTestCases = (data: AddTestCasesReq) => {
+  return http.request<BaseResponse<void>>(
+    "post",
+    baseUrlApi("question/addTestCases"),
     { data }
   );
 };

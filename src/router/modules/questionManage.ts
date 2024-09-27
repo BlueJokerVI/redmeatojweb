@@ -20,6 +20,15 @@ export default {
         // 通过设置showParent为true，显示父级
         showParent: true
       }
+    },
+    {
+      path: "/userManage/addQuestion",
+      name: "AddQuestion",
+      component: () => import("@/views/questionManage/AddQuestion.vue"),
+      meta: {
+        title: "新增题目",
+        showParent: true
+      }
     }
   ]
 } as RouteConfigsTable;

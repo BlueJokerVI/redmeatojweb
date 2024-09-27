@@ -23,6 +23,7 @@ export type QuestionVo = {
   id: string;
   createTime: String;
   questionAcNum: number;
+  questionIoTotal: number;
   questionDesc: string;
   questionIoExample: Array<TestCase>;
   questionMemLimit: number;
@@ -84,3 +85,9 @@ export type GetTestCasePageReq = BasePageReq & {
 
 /** 题目测试用例分页搜索响应 */
 export type GetTestCasePageResp = BaseResponse<BasePageResponse<TestCase>>;
+
+/**添加题目测试用例请求 */
+export type AddTestCasesReq = {
+  questionId: string;
+  testCases: Array<TestCase>;
+};

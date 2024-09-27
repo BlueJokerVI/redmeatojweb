@@ -65,7 +65,11 @@ import {
   SearchQuestionListResp,
   UpdateQuestionReq
 } from "@/api/question/model";
-import { searchQuestions, updateQuestion } from "@/api/question/request";
+import {
+  deleteQuestion,
+  searchQuestions,
+  updateQuestion
+} from "@/api/question/request";
 import { PaginationProps } from "@pureadmin/table";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { onMounted, reactive, ref, watchEffect } from "vue";
@@ -89,7 +93,8 @@ let questionPage = ref();
 const questionListColumn: TableColumnList = [
   {
     label: "id",
-    prop: "id"
+    prop: "id",
+    showOverflowTooltip: true
   },
   {
     label: "题目名称",
@@ -97,11 +102,21 @@ const questionListColumn: TableColumnList = [
   },
   {
     label: "题目描述",
-    prop: "questionDesc"
+    prop: "questionDesc",
+    showOverflowTooltip: true
   },
   {
     label: "题目标签",
-    prop: "questionTags"
+    prop: "questionTags",
+    cellRenderer: ({ row }) => (
+      <>
+        {row.questionTags.map((tag, index) => (
+          <el-tag class="ml-1" key={index} type="success">
+            {tag}
+          </el-tag>
+        ))}
+      </>
+    )
   },
   {
     label: "题目通过次数",
@@ -125,8 +140,9 @@ const questionListColumn: TableColumnList = [
   },
   {
     label: "编辑",
+    width: "150px",
     cellRenderer: ({ row }) => (
-      <>
+      <div class="flex space-x-4 flex-nowrap">
         <el-button
           size="small"
           effect="dark"
@@ -137,7 +153,20 @@ const questionListColumn: TableColumnList = [
         >
           编辑
         </el-button>
-      </>
+
+        <el-popconfirm
+          title="确定要删除此项吗？"
+          onConfirm={() => deleteQ(row.id)}
+          onCancel={() => console.log(row)}
+          v-slots={{
+            reference: () => (
+              <el-button size="small" type="danger">
+                删除
+              </el-button>
+            )
+          }}
+        />
+      </div>
     )
   }
 ];
@@ -197,6 +226,14 @@ function updateQuestionInfo(row) {
     }
   });
 }
+//删除题目
+const deleteQ = async questionId => {
+  const res = await deleteQuestion(questionId);
+  if (res.code === 0) {
+    message("删除成功", { type: "success" });
+    await getQuestions(questionPageReq);
+  }
+};
 
 onMounted(async () => {
   await getQuestions({ pageSize: 10, current: 1 });
