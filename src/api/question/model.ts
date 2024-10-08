@@ -21,7 +21,7 @@ export type TestCase = {
 
 export type QuestionVo = {
   id: string;
-  createTime: String;
+  createTime: string;
   questionAcNum: number;
   questionIoTotal: number;
   questionDesc: string;
@@ -31,7 +31,7 @@ export type QuestionVo = {
   questionSubmitNum: number;
   questionTags: Array<string>;
   questionTimeLimit: number;
-  updateTime: String;
+  updateTime: string;
 };
 
 /**

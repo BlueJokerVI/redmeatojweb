@@ -32,6 +32,16 @@ export default [
     }
   },
   {
+    path: "/solveQuestion",
+    name: "SolveQuestion",
+    component: () => import("@/views/questionSolve/SolveQuestion.vue"),
+    meta: {
+      title: "解题",
+      showLink: false,
+      rank: 103
+    }
+  },
+  {
     path: "/redirect",
     component: Layout,
     meta: {
