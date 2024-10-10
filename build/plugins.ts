@@ -13,6 +13,8 @@ import { visualizer } from "rollup-plugin-visualizer";
 import removeConsole from "vite-plugin-remove-console";
 import { themePreprocessorPlugin } from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
+import monacoEditorPlugin from "vite-plugin-monaco-editor";
+
 // import { vitePluginFakeServer } from "vite-plugin-fake-server";
 
 export function getPluginsList(
@@ -22,6 +24,17 @@ export function getPluginsList(
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
+    //vite导入Monaco配置
+    //vite导入Monaco配置
+    (monacoEditorPlugin as any).default({
+      languageWorkers: ["json", "editorWorkerService"],
+      customWorkers: [
+        {
+          label: "graphql",
+          entry: "monaco-graphql/dist/graphql.worker"
+        }
+      ]
+    }),
     // jsx、tsx语法支持
     vueJsx(),
     checker({

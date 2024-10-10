@@ -53,6 +53,9 @@ importers:
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
+      monaco-editor:
+        specifier: 0.52.0
+        version: 0.52.0
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -225,6 +228,9 @@ importers:
       vite-plugin-fake-server:
         specifier: ^2.1.1
         version: 2.1.1
+      vite-plugin-monaco-editor:
+        specifier: 1.1.0
+        version: 1.1.0(monaco-editor@0.52.0)
       vite-plugin-remove-console:
         specifier: ^2.2.0
         version: 2.2.0
@@ -2972,6 +2978,9 @@ packages:
   mlly@1.7.1:
     resolution: {integrity: sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA==}
 
+  monaco-editor@0.52.0:
+    resolution: {integrity: sha512-OeWhNpABLCeTqubfqLMXGsqf6OmPU6pHM85kF3dhy6kq5hnhuVS1p3VrEW/XhWHc71P2tHyS5JFySD8mgs1crw==, tarball: https://registry.npmmirror.com/monaco-editor/-/monaco-editor-0.52.0.tgz}
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -4298,6 +4307,11 @@ packages:
 
   vite-plugin-fake-server@2.1.1:
     resolution: {integrity: sha512-QUgssvE7jI9XU1WuDZ3gkzzi9GzVeapELIlFNMvmE2swDKL7O2y2nV0kRZ9VYOsD+hV312uSJyzHBJvcmBw7UQ==}
+
+  vite-plugin-monaco-editor@1.1.0:
+    resolution: {integrity: sha512-IvtUqZotrRoVqwT0PBBDIZPNraya3BxN/bfcNfnxZ5rkJiGcNtO5eAOWWSgT7zullIAEqQwxMU83yL9J5k7gww==, tarball: https://registry.npmmirror.com/vite-plugin-monaco-editor/-/vite-plugin-monaco-editor-1.1.0.tgz}
+    peerDependencies:
+      monaco-editor: '>=0.33.0'
 
   vite-plugin-remove-console@2.2.0:
     resolution: {integrity: sha512-qgjh5pz75MdE9Kzs8J0kBwaCfifHV0ezRbB9rpGsIOxam+ilcGV7WOk91vFJXquzRmiKrFh3Hxlh0JJWAmXTbQ==}
@@ -7556,6 +7570,8 @@ snapshots:
       ufo: 1.5.4
     optional: true
 
+  monaco-editor@0.52.0: {}
+
   mri@1.2.0: {}
 
   ms@2.0.0: {}
@@ -8925,6 +8941,10 @@ snapshots:
       fast-glob: 3.3.2
       path-to-regexp: 6.2.2
       picocolors: 1.0.1
+
+  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.52.0):
+    dependencies:
+      monaco-editor: 0.52.0
 
   vite-plugin-remove-console@2.2.0: {}
 

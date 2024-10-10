@@ -8,7 +8,7 @@ export default {
     icon: userSettingsFill,
     title: "用户管理",
     roles: [UserRole[1]],
-    rank: 2
+    rank: 3
   },
   children: [
     {

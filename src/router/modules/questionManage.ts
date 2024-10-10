@@ -8,11 +8,11 @@ export default {
     icon: questionSettingsFill,
     title: "题目管理",
     roles: [UserRole[1]],
-    rank: 1
+    rank: 2
   },
   children: [
     {
-      path: "/userManage/questions",
+      path: "/questionManage/questions",
       name: "QuestionManage",
       component: () => import("@/views/questionManage/QuestionManage.vue"),
       meta: {
@@ -22,12 +22,22 @@ export default {
       }
     },
     {
-      path: "/userManage/addQuestion",
+      path: "/questionManage/addQuestion",
       name: "AddQuestion",
       component: () => import("@/views/questionManage/AddQuestion.vue"),
       meta: {
         title: "新增题目",
         showParent: true
+      }
+    },
+    {
+      path: "/solveQuestion",
+      name: "SolveQuestion",
+      component: () => import("@/views/questionSolve/SolveQuestion.vue"),
+      meta: {
+        title: "解题",
+        showLink: false,
+        rank: 103
       }
     }
   ]

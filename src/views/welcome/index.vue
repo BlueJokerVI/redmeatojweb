@@ -120,7 +120,7 @@ const questionListColumn: TableColumnList = [
     )
   },
   {
-    label: "提交/通过",
+    label: "通过/提交",
     prop: "questionAcNum",
     cellRenderer: ({ row }) => (
       <>
@@ -131,7 +131,7 @@ const questionListColumn: TableColumnList = [
     )
   },
   {
-    label: "编辑",
+    label: "解题",
     width: "150px",
     cellRenderer: ({ row }) => (
       <div>
@@ -182,7 +182,7 @@ let router = useRouter();
 const goSolve = questionInfo => {
   router.push({
     name: "SolveQuestion",
-    query: JSON.stringify(questionInfo)
+    query: { questionInfo: JSON.stringify(questionInfo) }
   });
 };
 

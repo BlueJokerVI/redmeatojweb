@@ -27,9 +27,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "iconify.excludes": [
-    "el"
-  ],
+  "iconify.excludes": ["el"],
   "vscodeCustomCodeColor.highlightValue": [
     "v-loading",
     "v-auth",
@@ -40,7 +38,5 @@
     "v-ripple"
   ],
   "vscodeCustomCodeColor.highlightValueColor": "#b392f0",
-  "cSpell.words": [
-    "brotli"
-  ],
+  "cSpell.words": ["brotli", "iconify"]
 }
