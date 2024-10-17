@@ -62,7 +62,7 @@ const userListColumn: TableColumnList = [
     cellRenderer: ({ row }) => (
       <>
         {row.userAvatar === null || "" ? (
-          <el-avatar src={"/src/assets/user.jpg"} />
+          <el-avatar src={"/user.jpg"} />
         ) : (
           <el-avatar src={row.userAvatar} />
         )}

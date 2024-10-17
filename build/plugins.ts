@@ -15,8 +15,6 @@ import { themePreprocessorPlugin } from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
 import monacoEditorPlugin from "vite-plugin-monaco-editor";
 
-// import { vitePluginFakeServer } from "vite-plugin-fake-server";
-
 export function getPluginsList(
   VITE_CDN: boolean,
   VITE_COMPRESSION: ViteCompression
@@ -24,7 +22,8 @@ export function getPluginsList(
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
-    //vite导入Monaco配置
+    // jsx、tsx语法支持
+    vueJsx(),
     //vite导入Monaco配置
     (monacoEditorPlugin as any).default({
       languageWorkers: ["json", "editorWorkerService"],
@@ -35,8 +34,7 @@ export function getPluginsList(
         }
       ]
     }),
-    // jsx、tsx语法支持
-    vueJsx(),
+
     checker({
       typescript: true,
       vueTsc: true,

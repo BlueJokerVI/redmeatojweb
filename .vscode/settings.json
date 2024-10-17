@@ -38,5 +38,5 @@
     "v-ripple"
   ],
   "vscodeCustomCodeColor.highlightValueColor": "#b392f0",
-  "cSpell.words": ["brotli", "iconify"]
+  "cSpell.words": ["brotli", "iconify", "popconfirm"]
 }

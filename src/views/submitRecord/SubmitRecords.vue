@@ -33,6 +33,15 @@ let submitRecordColumn: TableColumnList = [
     prop: "questionId"
   },
   {
+    label: "语言",
+    prop: "language",
+    cellRenderer: ({ row }) => (
+      <>
+        <el-tag type="primary">{row.language}</el-tag>
+      </>
+    )
+  },
+  {
     label: "判题结果",
     prop: "judgeResult",
     cellRenderer: ({ row }) => (

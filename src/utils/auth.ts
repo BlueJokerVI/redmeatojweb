@@ -77,7 +77,7 @@ export function setToken(data: DataInfo<Date>) {
   }) {
     useUserStoreHook().SET_ID(id);
     if (userAvatar === "" || userAvatar === null) {
-      useUserStoreHook().SET_USER_AVATAR("/src/assets/user.jpg");
+      useUserStoreHook().SET_USER_AVATAR("/user.jpg");
     } else {
       useUserStoreHook().SET_USER_AVATAR(userAvatar);
     }

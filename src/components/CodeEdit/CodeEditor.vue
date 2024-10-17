@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { tr } from "element-plus/es/locales.mjs";
 import * as monaco from "monaco-editor";
 import { onMounted, ref, toRaw, withDefaults, defineProps, watch } from "vue";
 
@@ -47,10 +46,9 @@ watch(
   () => props.language,
   () => {
     if (codeEditor.value) {
-      monaco.editor.setModelLanguage(
-        toRaw(codeEditor.value).getModel(),
-        props.language
-      );
+      const model = toRaw(codeEditor.value).getModel();
+      model.setValue(props.value);
+      monaco.editor.setModelLanguage(model, props.language);
     }
   }
 );

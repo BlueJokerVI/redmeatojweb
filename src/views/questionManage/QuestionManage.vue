@@ -75,9 +75,8 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { onMounted, reactive, ref, watchEffect } from "vue";
 import searchIcon from "@iconify-icons/ep/search";
 import { QuestionTags } from "@/api/question/enum";
-import { addDialog } from "@/components/ReDialog";
 import { message } from "@/utils/message";
-import { updateUserInfoByAdmin } from "@/api/user/request";
+
 import { addDrawer } from "@/components/ReDrawer";
 import UpdateQuestionFrom from "./UpdateQuestionFrom.vue";
 const getQuestions = async (data: SearchQuestionListReq) => {
@@ -154,18 +153,16 @@ const questionListColumn: TableColumnList = [
           编辑
         </el-button>
 
-        <el-popconfirm
-          title="确定要删除此项吗？"
-          onConfirm={() => deleteQ(row.id)}
-          onCancel={() => console.log(row)}
-          v-slots={{
-            reference: () => (
-              <el-button size="small" type="danger">
-                删除
-              </el-button>
-            )
+        <el-button
+          size="small"
+          effect="dark"
+          type="danger"
+          onClick={() => {
+            () => deleteQ(row.id);
           }}
-        />
+        >
+          删除
+        </el-button>
       </div>
     )
   }

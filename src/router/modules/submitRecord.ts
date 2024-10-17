@@ -6,7 +6,7 @@ export default {
   meta: {
     icon: barChartBoxFill,
     title: "实时提交记录",
-    roles: [UserRole[1]],
+    roles: [UserRole[0]],
     rank: 1
   },
   children: [

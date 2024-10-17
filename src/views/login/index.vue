@@ -131,8 +131,8 @@ dataThemeChange(overallStyle.value);
 const { title } = useNav();
 
 const ruleForm = reactive({
-  account: "pureAdmin",
-  password: "cc111111"
+  account: "",
+  password: ""
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {

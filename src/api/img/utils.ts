@@ -1,7 +1,7 @@
 import axios from "axios";
 //上传文件axios
 export const uploadFileAxios = axios.create({
-  timeout: 1000
+  timeout: 10000
 });
 
 // 添加请求拦截器

@@ -20,13 +20,51 @@ let codeValue = ref(
     "    } \n" +
     "}"
 );
+
+const codeTemplate = [
+  "public class Main { \n" +
+    "    public static void main(String[] args){ \n" +
+    "        \n" +
+    "    } \n" +
+    "}",
+  "#include <iostream> \n" +
+    "using namespace std; \n" +
+    "\n" +
+    "int main() { \n" +
+    "    \n" +
+    "    return 0; \n" +
+    "}"
+];
+
 let judging = ref(false);
 
 let req = ref<AddSubmitRecordReq>({
   language: "java",
   questionId: questionInfo.id,
-  submitContext: ""
+  submitContext: codeTemplate[0]
 });
+
+const languageOptions = [
+  {
+    value: "java",
+    label: "java"
+  },
+  {
+    value: "cpp",
+    label: "cpp"
+  }
+];
+
+const changeLanguage = v => {
+  console.log("changeLanguage", v);
+  if (v === "java") {
+    codeValue.value = codeTemplate[0];
+    req.value.language = "java";
+  } else if (v === "cpp") {
+    codeValue.value = codeTemplate[1];
+    req.value.language = "cpp";
+  }
+};
 
 //将编辑器内代码复制到请求内
 const handleChange = code => {
@@ -92,7 +130,7 @@ const submitCode = async () => {
       <!-- 限制条件 -->
       <div class="bg-white p-4 shadow rounded">
         <h3 class="text-lg font-semibold mb-2">限制条件</h3>
-        <p>内存限制：{{ questionInfo.questionMemLimit }} MB</p>
+        <p>内存限制：{{ questionInfo.questionMemLimit }} KB</p>
         <p>时间限制：{{ questionInfo.questionTimeLimit }} ms</p>
       </div>
       <!-- 标签展示 -->
@@ -113,12 +151,26 @@ const submitCode = async () => {
     <div class="w-1/2 bg-gray-200 p-4 space-y-2">
       <div class="bg-white p-5 rounded">
         <h2 class="text-2xl font-bold mb-3 text-gray-700">解题</h2>
+        <el-select
+          v-model="req.language"
+          placeholder="选择语言"
+          style="width: 100px"
+          v-on:change="changeLanguage"
+        >
+          <el-option
+            v-for="item in languageOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </div>
 
       <CodeEditor
         :value="codeValue"
         :handle-change="handleChange"
         class="bg-gray-50 border rounded border-gray-200 p-4 duration-300 overflow-auto max-h-[70vh]"
+        :language="req.language"
       />
 
       <div class="w-full flex justify-center">

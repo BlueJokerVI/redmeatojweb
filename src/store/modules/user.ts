@@ -21,7 +21,7 @@ export const useUserStore = defineStore({
     userAvatar:
       storageLocal().getItem<DataInfo<number>>(userKey)?.userAvatar === "" ||
       storageLocal().getItem<DataInfo<number>>(userKey)?.userAvatar === null
-        ? "/src/assets/user.jpg"
+        ? "/user.jpg"
         : storageLocal().getItem<DataInfo<number>>(userKey)?.userAvatar,
     // 用户名
     account: storageLocal().getItem<DataInfo<number>>(userKey)?.account ?? "",
@@ -51,7 +51,7 @@ export const useUserStore = defineStore({
       this.id = userInfo.id;
       this.userAvatar =
         userInfo?.userAvatar === "" || userInfo?.userAvatar === null
-          ? "/src/assets/user.jpg"
+          ? "/user.jpg"
           : userInfo?.userAvatar;
       this.gender = userInfo?.gender;
       this.account = userInfo?.account;
@@ -67,7 +67,7 @@ export const useUserStore = defineStore({
     /** 存储头像 */
     SET_USER_AVATAR(userAvatar: string) {
       if (userAvatar === undefined || userAvatar === null) {
-        this.userAvatar = "/src/assets/user.jpg";
+        this.userAvatar = "/user.jpg";
         return;
       }
       this.userAvatar = userAvatar;
