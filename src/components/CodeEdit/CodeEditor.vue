@@ -1,5 +1,5 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef" />
+  <div id="code-editor" ref="codeEditorRef" class="custom-scroll" />
 </template>
 
 <script setup lang="ts">
@@ -85,5 +85,30 @@ onMounted(() => {
   height: 100%;
   width: 100%;
   margin: auto;
+}
+.custom-scroll {
+  scrollbar-width: thin; /* 针对 Firefox 浏览器 */
+  scrollbar-color: #888 #f0f0f0;
+}
+
+/* 针对 WebKit 浏览器的滚动条样式 */
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 </style>

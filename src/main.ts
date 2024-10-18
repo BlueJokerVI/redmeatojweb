@@ -21,7 +21,8 @@ import "element-plus/dist/index.css";
 // 导入字体图标
 import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
-
+// 导图滚动条样式
+import "./style/scroll.css";
 const app = createApp(App);
 
 // 自定义指令

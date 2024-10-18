@@ -93,7 +93,7 @@ const submitCode = async () => {
 
 <template>
   <div class="flex h-screen">
-    <div class="w-1/2 bg-gray-200 p-4 space-y-2">
+    <div class="w-1/2 bg-gray-200 p-4 space-y-2 overflow-y-auto">
       <!-- 基本信息 -->
       <div class="bg-white p-4 shadow rounded">
         <h2 class="text-xl font-semibold mb-2">
@@ -118,11 +118,12 @@ const submitCode = async () => {
         >
           <div class="font-serif font-bold">输入:</div>
           <div class="mb-4 border p-2 rounded bg-gray-50">
-            {{ testCase.inputContent }}
+            <!-- 保留文本中的换行与空白符 -->
+            <pre v-html="testCase.inputContent" />
           </div>
           <div class="mt-2 font-serif font-bold">输出:</div>
           <div class="mb-4 border p-2 rounded bg-gray-50">
-            {{ testCase.outputContent }}
+            <pre v-html="testCase.outputContent" />
           </div>
         </div>
       </div>

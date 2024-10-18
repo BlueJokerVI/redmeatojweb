@@ -143,7 +143,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   let storeInfo: DataInfo<Date> = {
     ...res.data,
     roles: [UserRole[res.data.userRole]] as Array<string> /**适配前端权限 */,
-    accessToken: "eyJhbGciOiJIUzUxMiJ9.admin" /**假的后端没实现 token */,
+    accessToken: "" /**假的后端没实现 token */,
     refreshToken: "",
     permissions: [],
     expires: new Date(
