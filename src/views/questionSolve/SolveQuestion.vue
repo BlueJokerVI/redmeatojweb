@@ -3,12 +3,17 @@ defineOptions({
   name: "SolveQuestion"
 });
 
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import CodeEditor from "@/components/CodeEdit/CodeEditor.vue";
 import { AddSubmitRecordReq } from "@/api/submitRecord/model";
 import { addSubmitRecord } from "@/api/submitRecord/request";
 import { message } from "@/utils/message";
+import thumbUp from "@iconify-icons/ri/thumb-up-line";
+import thumbUpDeep from "@iconify-icons/ri/thumb-up-fill";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { getQuestionThumb, thumbQuestion } from "@/api/question/request";
+import { number } from "echarts";
 
 const route = useRoute();
 let questionInfo = JSON.parse(route.query.questionInfo as any);
@@ -89,6 +94,25 @@ const submitCode = async () => {
     message(res.message, { type: "error" });
   }
 };
+
+//点赞相关
+let clicked = ref(false);
+let thumbNum = ref(0);
+const thumbClick = () => {
+  if (clicked.value === false) {
+    thumbQuestion(questionInfo.id, 1);
+    thumbNum.value += 1;
+  } else {
+    thumbQuestion(questionInfo.id, -1);
+    thumbNum.value -= 1;
+  }
+  clicked.value = !clicked.value;
+};
+
+onMounted(async () => {
+  let res = await getQuestionThumb(questionInfo.id);
+  thumbNum.value = parseInt(res.data);
+});
 </script>
 
 <template>
@@ -96,9 +120,32 @@ const submitCode = async () => {
     <div class="w-1/2 bg-gray-200 p-4 space-y-2 overflow-y-auto">
       <!-- 基本信息 -->
       <div class="bg-white p-4 shadow rounded">
-        <h2 class="text-xl font-semibold mb-2">
-          {{ questionInfo.questionName }}
-        </h2>
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold mb-2">
+            {{ questionInfo.questionName }}
+          </h2>
+          <div>
+            <el-button
+              v-if="clicked"
+              :icon="useRenderIcon(thumbUpDeep)"
+              type="success"
+              size="small"
+              plain
+              round
+              @click="thumbClick"
+              >{{ thumbNum }}</el-button
+            >
+            <el-button
+              v-if="!clicked"
+              :icon="useRenderIcon(thumbUpDeep)"
+              size="small"
+              plain
+              round
+              @click="thumbClick"
+              >{{ thumbNum }}</el-button
+            >
+          </div>
+        </div>
         <p>题目通过数：{{ questionInfo.questionAcNum }}</p>
         <p>题目提交数：{{ questionInfo.questionSubmitNum }}</p>
       </div>

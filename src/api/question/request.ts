@@ -81,3 +81,19 @@ export const addQuestionTestCases = (data: AddTestCasesReq) => {
     { data }
   );
 };
+
+/**题目点赞 */
+export const thumbQuestion = (questionId, count) => {
+  return http.request<BaseResponse<string>>(
+    "get",
+    baseUrlApi("question/thumbsUp?questionId=" + questionId + "&count=" + count)
+  );
+};
+
+/**获取题目点赞数 */
+export const getQuestionThumb = questionId => {
+  return http.request<BaseResponse<string>>(
+    "get",
+    baseUrlApi("question/getThumbs?questionId=" + questionId)
+  );
+};
