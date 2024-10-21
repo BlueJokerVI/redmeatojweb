@@ -40,18 +40,53 @@
         >搜索</el-button
       >
     </div>
-    <pure-table
-      class="mr-1"
-      border
-      size="default"
-      alignWhole="center"
-      :data="questionPage"
-      :columns="questionListColumn"
-      :loading="loadingFlag"
-      :pagination="pagination"
-      @page-size-change="onSizeChange"
-      @page-current-change="onCurrentChange"
-    />
+    <div class="flex">
+      <div class="w-5/6">
+        <pure-table
+          class="mr-1"
+          border
+          size="default"
+          alignWhole="center"
+          :data="questionPage"
+          :columns="questionListColumn"
+          :loading="loadingFlag"
+          :pagination="pagination"
+          @page-size-change="onSizeChange"
+          @page-current-change="onCurrentChange"
+        />
+      </div>
+      <div class="w-1/6 ml-2">
+        <el-card shadow="never">
+          <template #header>
+            <div class="text-xl font-bold mb-4 text-center text-gray-800">
+              日榜
+            </div>
+          </template>
+          <div
+            v-for="(o, index) in rank"
+            :key="index"
+            class="flex items-center py-3 border-b border-gray-200"
+          >
+            <div class="w-1/6 text-lg font-bold text-blue-600 text-center">
+              {{ index + 1 }}
+            </div>
+            <div class="w-2/3 flex items-center">
+              <div class="w-1/3">
+                <el-avatar :src="o.userAvatar ? o.userAvatar : './user.jpg'" />
+              </div>
+              <div class="w-2/3 pl-4">
+                <div class="text-lg font-semibold text-gray-800">
+                  {{ o.account }}
+                </div>
+                <div class="text-sm text-gray-500 italic">
+                  完成 {{ o.submittedNumb }} 题
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,6 +116,8 @@ import { updateUserInfoByAdmin } from "@/api/user/request";
 import { addDrawer } from "@/components/ReDrawer";
 import UpdateQuestionFrom from "./UpdateQuestionFrom.vue";
 import { useRoute, useRouter } from "vue-router";
+import { userRank } from "@/api/rank/request";
+import { UserRank } from "@/api/rank/model";
 const getQuestions = async (data: SearchQuestionListReq) => {
   const res = await searchQuestions(data);
   questionPage.value = res.data.lists;
@@ -186,8 +223,16 @@ const goSolve = questionInfo => {
   });
 };
 
+//用户排名相关
+// 默认获取前10名
+const count = 10;
+let rank = ref();
 onMounted(async () => {
-  await getQuestions({ pageSize: 10, current: 1 });
+  const [rankResult] = await Promise.all([
+    userRank(count),
+    getQuestions({ pageSize: 10, current: 1 })
+  ]);
+  rank.value = (rankResult as UserRank).data;
   loadingFlag.value = false;
 });
 </script>
