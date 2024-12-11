@@ -247,7 +247,6 @@ const updateTestCase = testCase => {
       }
     },
     beforeSure: async (done, { options, index }) => {
-      console.log(options.props.formInline);
       let req: AddTestCasesReq = {
         questionId: questionInfo.value.id,
         testCases: [options.props.formInline]
@@ -281,7 +280,6 @@ const addTestCases = async () => {
     item.testCaseId = startId + index; // 从startId开始递增
   });
   req.testCases = dataList.value;
-  console.log(req);
   let res = await addQuestionTestCases(req);
   if (res.code === 0) {
     message("添加测试用例成功", { type: "success" });

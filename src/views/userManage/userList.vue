@@ -28,7 +28,6 @@ onMounted(async () => {
   pagination.pageSize = userListResp.value.data.pageSize;
   pagination.currentPage = userListResp.value.data.current;
   pagination.total = userListResp.value.data.total;
-  console.log("xxx", userListResp.value);
   loadingFlag.value = false;
 });
 

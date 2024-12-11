@@ -87,7 +87,7 @@ let submitInfo = ref<SubmitRecordVo>({
   userId: "string"
 });
 let submitRecordId = route.query.id;
-console.log(submitRecordId);
+
 onMounted(async () => {
   let req: SearchSubmitRecordsReq = {
     current: 1,
@@ -95,7 +95,6 @@ onMounted(async () => {
     id: submitRecordId as any
   };
   let res = await searchSubmitRecords(req);
-  console.log("searchSubmitRecords", res);
   submitInfo.value = res.data.lists[0];
 });
 </script>

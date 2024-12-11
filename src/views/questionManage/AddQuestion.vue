@@ -42,7 +42,6 @@ const add = async () => {
   if (res.code === 0) {
     message("新增题目成功", { type: "success" });
   }
-  console.log("res", res);
 };
 </script>
 

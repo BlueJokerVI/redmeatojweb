@@ -17,7 +17,7 @@ import { number } from "echarts";
 
 const route = useRoute();
 let questionInfo = JSON.parse(route.query.questionInfo as any);
-console.log(questionInfo);
+
 let codeValue = ref(
   "public class Main { \n" +
     "    public static void main(String[] args){ \n" +
@@ -61,7 +61,6 @@ const languageOptions = [
 ];
 
 const changeLanguage = v => {
-  console.log("changeLanguage", v);
   if (v === "java") {
     codeValue.value = codeTemplate[0];
     req.value.language = "java";
@@ -80,10 +79,9 @@ let router = useRouter();
 
 const submitCode = async () => {
   judging.value = true;
-  console.log("req", req.value);
   let res = await addSubmitRecord(req.value);
   judging.value = false;
-  console.log("res", res);
+
   if (res.code === 0) {
     message(res.message, { type: "success" });
     router.push({

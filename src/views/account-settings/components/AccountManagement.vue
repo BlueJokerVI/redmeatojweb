@@ -38,7 +38,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (valid) {
       toUpdatePassword();
     } else {
-      console.log("error submit!", fields);
     }
   });
 };

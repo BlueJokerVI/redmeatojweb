@@ -187,9 +187,6 @@ const tags = Object.keys(QuestionTags).map(key => ({
   value: QuestionTags[key as keyof typeof QuestionTags], // 使用枚举值
   label: QuestionTags[key as keyof typeof QuestionTags] // 使用枚举值
 }));
-watchEffect(() => {
-  console.log("questionPageReq", questionPageReq.questionTags);
-});
 
 //每页大小发生改变是重新获取页信息
 async function onSizeChange(val) {
@@ -203,7 +200,6 @@ async function onCurrentChange(val) {
 }
 //更新题目信息
 function updateQuestionInfo(row) {
-  console.log(row);
   addDrawer({
     withHeader: false,
     size: "100%",
@@ -212,7 +208,6 @@ function updateQuestionInfo(row) {
     },
     contentRenderer: () => UpdateQuestionFrom,
     beforeSure: async (done, { options, index }) => {
-      console.log(options.props.formInline);
       const questionInfo: QuestionVo = options.props.formInline;
       let updateReq: UpdateQuestionReq = {
         ...questionInfo,

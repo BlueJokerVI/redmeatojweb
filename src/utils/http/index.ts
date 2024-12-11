@@ -66,7 +66,6 @@ class PureHttp {
   private httpInterceptorsRequest(): void {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
-        console.log("config", config);
         // 开启进度条动画
         NProgress.start();
         // 优先判断post/get等方法是否传入回调，否则执行初始化设置等回调
@@ -126,8 +125,6 @@ class PureHttp {
     const instance = PureHttp.axiosInstance;
     instance.interceptors.response.use(
       (response: PureHttpResponse) => {
-        console.log("response", response);
-
         const $config = response.config;
         // 关闭进度条动画
         NProgress.done();
@@ -144,10 +141,10 @@ class PureHttp {
         if (response.data.code !== 0) {
           //返回未登录，跳转到登录页面
           if (response.data.code === 40100) {
+            router.push("/login");
             message(response.data.message, { type: "error" });
             removeToken();
             storageLocal().clear();
-            router.push("/login");
             return response.data;
           }
           message(response.data.message, { type: "error" });

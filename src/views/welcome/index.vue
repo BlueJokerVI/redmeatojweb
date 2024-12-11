@@ -199,10 +199,6 @@ const tags = Object.keys(QuestionTags).map(key => ({
   value: QuestionTags[key as keyof typeof QuestionTags], // 使用枚举值
   label: QuestionTags[key as keyof typeof QuestionTags] // 使用枚举值
 }));
-watchEffect(() => {
-  console.log("questionPageReq", questionPageReq.questionTags);
-});
-
 //每页大小发生改变是重新获取页信息
 async function onSizeChange(val) {
   questionPageReq.pageSize = val;

@@ -74,12 +74,10 @@ const onChange = async uploadFile => {
   };
   //获取上传图片地址
   let res: ImgUploadUrlResponse = await getUpLoadImgUrl(fileInfo);
-  console.log("res", res);
   uploadReq.uploadUrl = res.data.uploadUrl;
   //设置上传图片类型
   uploadReq.contextType = uploadFile.raw.type;
   downloadUrl.value = res.data.downloadUrl;
-  console.log("uploadReq", uploadReq);
 };
 const handleClose = () => {
   cropRef.value.hidePopover();
@@ -90,12 +88,10 @@ const handleClose = () => {
 const onCropper = ({ blob }) => (cropperBlob.value = blob);
 
 const handleSubmitImage = () => {
-  console.log("uploadReq", uploadReq);
   //设置上传图片二级制数据
   uploadReq.data = cropperBlob.value;
   fileUpload(uploadReq)
     .then(res => {
-      console.log("res", res);
       if (res.status === 200) {
         userInfos.userAvatar = downloadUrl.value;
         //更新数据库信息
@@ -127,7 +123,6 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
       let res: any = await customUserInfo({
         ...userInfos
       });
-      console.log("res", res);
       //更新pinia、本地信息
       storageLocal().setItem(userKey, {
         ...res.data
@@ -136,7 +131,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
 
       message("更新信息成功", { type: "success" });
     } else {
-      console.log("表单校验未通过！", fields);
+      message("表单校验未通过！", { type: "error" });
     }
   });
 };
