@@ -122,6 +122,7 @@ const getQuestions = async (data: SearchQuestionListReq) => {
   const res = await searchQuestions(data);
   questionPage.value = res.data.lists;
   pagination.total = res.data.total;
+  pagination.pageSize = res.data.pageSize;
   pagination.currentPage = res.data.current;
 };
 

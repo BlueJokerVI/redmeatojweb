@@ -19,6 +19,8 @@ import { ReCropperPreview } from "@/components/ReCropperPreview/index";
 import { customUserInfo } from "@/api/user/request";
 import { userKey } from "@/utils/auth";
 import { use } from "echarts/types/src/extension.js";
+import { util } from "echarts";
+import { imgMinioUri } from "@/api/utils";
 defineOptions({
   name: "Profile"
 });
@@ -74,10 +76,14 @@ const onChange = async uploadFile => {
   };
   //获取上传图片地址
   let res: ImgUploadUrlResponse = await getUpLoadImgUrl(fileInfo);
-  uploadReq.uploadUrl = res.data.uploadUrl;
+
+  let url = new URL(res.data.downloadUrl);
+  console.log("url", url, url.pathname + url.search);
+  uploadReq.uploadUrl = imgMinioUri(url.pathname + url.search);
+
   //设置上传图片类型
   uploadReq.contextType = uploadFile.raw.type;
-  downloadUrl.value = res.data.downloadUrl;
+  downloadUrl.value = imgMinioUri(url.pathname);
 };
 const handleClose = () => {
   cropRef.value.hidePopover();
